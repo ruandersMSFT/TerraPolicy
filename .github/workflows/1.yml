@@ -41,4 +41,5 @@ jobs:
             env:
               ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
             id: terraform-apply
-            run: terraform apply
+            run: terraform apply --auto-approve
+            
