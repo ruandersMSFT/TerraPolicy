@@ -9,6 +9,12 @@ terraform {
       version = "4.23.0"
     }
   }
+
+  backend "azurerm" {
+    storage_account_name = "ruanderspolicy"
+    container_name = "policy"
+    key = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
