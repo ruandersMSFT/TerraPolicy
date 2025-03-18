@@ -36,3 +36,9 @@ jobs:
               ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
             id: terraform-plan
             run: terraform plan
+
+            - name: Terraform Apply
+            env:
+              ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+            id: terraform-apply
+            run: terraform apply
