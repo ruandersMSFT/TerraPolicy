@@ -67,7 +67,7 @@ PARAMETERS
 
 resource "azurerm_role_definition" "example" {
   name        = "my-custom-role"
-  scope       = data.azurerm_management_group.example.id
+  scope       = module.mg1a.id
   description = "This is a custom role created via Terraform"
 
   permissions {
@@ -77,6 +77,6 @@ resource "azurerm_role_definition" "example" {
 
 
   assignable_scopes = [
-    data.azurerm_management_group.example.id
+    module.mg1a.id
   ]
 }
