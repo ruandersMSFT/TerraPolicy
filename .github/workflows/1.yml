@@ -27,13 +27,12 @@ jobs:
 
           - name: Terraform Init
             env:
-                ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+              ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
             id: terraform-init
             run: terraform init
 
-            
           - name: Terraform Plan
-          env:
+            env:
               ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
-          id: terraform-plan
-          run: terraform plan
+            id: terraform-plan
+            run: terraform plan
