@@ -1,3 +1,11 @@
+module "cisanetmg" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "cisanetmg"
+  display_name        = "cisanetmg"
+}
+
+
 module "mg1" {
   source = "./Modules/azurerm_management_group"
 
