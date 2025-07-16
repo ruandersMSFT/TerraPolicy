@@ -1,3 +1,6 @@
+// Grant "Management Group Contributor" at Tenant Root to AzurePolicy UAMI
+
+
 module "cisanetmg" {
   source = "./Modules/azurerm_management_group"
 
@@ -5,6 +8,65 @@ module "cisanetmg" {
   display_name        = "cisanetmg"
 }
 
+module "devmg" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "devmg"
+  display_name        = "devmg"
+  parent_management_group_id = module.cisanetmg.id
+}
+
+module "prodmg" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "prodmg"
+  display_name        = "prodmg"
+  parent_management_group_id = module.cisanetmg.id
+}
+
+module "csd" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "csd"
+  display_name        = "csd"
+  parent_management_group_id = module.cisanetmg.id
+}
+
+module "cb" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "cb"
+  display_name        = "cb"
+  parent_management_group_id = module.csd.id
+}
+
+module "me" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "me"
+  display_name        = "me"
+  parent_management_group_id = module.csd.id
+}
+
+module "th" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "th"
+  display_name        = "th"
+  parent_management_group_id = module.csd.id
+}
+
+module "vm" {
+  source = "./Modules/azurerm_management_group"
+
+  name                = "vm"
+  display_name        = "vm"
+  parent_management_group_id = module.csd.id
+}
+
+
+
+///////////////////////////////////////////////////
 
 module "mg1" {
   source = "./Modules/azurerm_management_group"
