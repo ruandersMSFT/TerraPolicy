@@ -9,7 +9,7 @@ module "cisanetmg" {
 }
 
 import {
-  to = "module.cisanetmg.azurerm_management_group.this"
+  to = module.cisanetmg.azurerm_management_group.this
   id = "/providers/Microsoft.Management/managementGroups/group1"
 }
 
