@@ -8,6 +8,12 @@ module "cisanetmg" {
   display_name        = "cisanetmg"
 }
 
+import {
+  to = "module.cisanetmg.azurerm_management_group.this"
+  id = "/providers/Microsoft.Management/managementGroups/group1"
+}
+
+
 module "devmg" {
   source = "./Modules/azurerm_management_group"
 
