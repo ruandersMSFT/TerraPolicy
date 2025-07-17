@@ -1,18 +1,11 @@
 // Grant "Management Group Contributor" at Tenant Root to AzurePolicy UAMI
 
-
 module "cisanetmg" {
   source = "./Modules/azurerm_management_group"
 
   name                = "cisanetmg"
   display_name        = "cisanetmg"
 }
-
-import {
-  to = module.cisanetmg.azurerm_management_group.this
-  id = "/providers/Microsoft.Management/managementGroups/cisanetmg"
-}
-
 
 module "devmg" {
   source = "./Modules/azurerm_management_group"
