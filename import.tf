@@ -18,3 +18,23 @@ import {
   id = "/providers/Microsoft.Management/managementGroups/csd"
 }
 
+import {
+  to = module.cb.azurerm_management_group.this
+  id = "/providers/Microsoft.Management/managementGroups/cb"
+}
+
+import {
+  to = module.vm.azurerm_management_group.this
+  id = "/providers/Microsoft.Management/managementGroups/vm"
+}
+
+import {
+  to = module.th.azurerm_management_group.this
+  id = "/providers/Microsoft.Management/managementGroups/th"
+}
+
+import {
+  to = module.me.azurerm_management_group.this
+  id = "/providers/Microsoft.Management/managementGroups/me"
+}
+
