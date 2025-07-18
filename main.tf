@@ -5,6 +5,8 @@ module "cisanetmg" {
 
   name                = "cisanetmg"
   display_name        = "cisanetmg"
+
+  subscription_ids = [module.sub1.id]
 }
 
 module "devmg" {
