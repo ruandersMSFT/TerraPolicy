@@ -22,6 +22,12 @@ variable "permissions" {
   default = []
 }
 
+variable "role_definition_id" {
+  description = "(Optional) A unique UUID/GUID which identifies this role - one will be generated if not specified. Changing this forces a new resource to be created."
+  type        = string
+  default    = null
+}
+
 variable "scope" {
   description = "(Required) The scope at which the Role Definition applies to."
   type        = string
