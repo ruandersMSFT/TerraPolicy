@@ -1,5 +1,5 @@
 resource "azurerm_role_definition" "this" {
-  name        = "my-custom-role"
+  name        = "my-custom-role2"
   scope       = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
   description = "This is a custom role created via Terraform"
 
