@@ -66,6 +66,14 @@ module "vm" {
 module "test1" {
   source = "./Modules/azurerm_role_definition"
 
+  assignable_scopes = [module.cisanetmg.id]
+  description = "This is a custom role created via Terraform"
+  name = "my-custom-role2"
+  permissions = [{
+    actions     = ["*"]
+    not_actions = []
+  }]
+  scope = "/providers/Microsoft.Management/managementGroups/cisanetmg"
 }
 
 

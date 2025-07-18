@@ -1,14 +1,15 @@
 resource "azurerm_role_definition" "this" {
-  name        = "my-custom-role2"
-  scope       = "/providers/Microsoft.Management/managementGroups/cisanetmg"
-  description = "This is a custom role created via Terraform"
+  name        = var.name
+  scope       = var.scope
+  description = var.description
 
-  permissions {
-    actions     = ["*"]
-    not_actions = []
+  dynamic "permissions" {
+    for_each = var.permissions
+    content {
+      actions     = permissions.value.actions
+      not_actions = permissions.value.not_actions
+    }
   }
 
-  assignable_scopes = [
-    "/providers/Microsoft.Management/managementGroups/cisanetmg", # /subscriptions/00000000-0000-0000-0000-000000000000
-  ]
+  assignable_scopes = var.assignable_scopes
 }
