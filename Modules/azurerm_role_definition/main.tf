@@ -1,6 +1,6 @@
 resource "azurerm_role_definition" "this" {
   name        = "my-custom-role"
-  scope       = data.azurerm_client_config.current.subscription_id
+  scope       = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
   description = "This is a custom role created via Terraform"
 
   permissions {
@@ -9,6 +9,6 @@ resource "azurerm_role_definition" "this" {
   }
 
   assignable_scopes = [
-    data.azurerm_client_config.current.subscription_id, # /subscriptions/00000000-0000-0000-0000-000000000000
+    "/subscriptions/${data.azurerm_client_config.current.subscription_id}", # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
 }
