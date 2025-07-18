@@ -80,6 +80,7 @@ module "sub1" {
   source = "./Modules/azurerm_subscription"
 
   subscription_name = "russellanderson.net"
+  subscription_id   = "56c86b74-e91b-4093-8c90-6220563357c3"
 }
 
 
