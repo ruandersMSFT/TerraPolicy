@@ -38,3 +38,9 @@ import {
   id = "/providers/Microsoft.Management/managementGroups/me"
 }
 
+import {
+  to = module.sub1.azurerm_subscription.this
+  id = "/providers/Microsoft.Subscription/aliases/russellanderson.net"
+}
+
+
