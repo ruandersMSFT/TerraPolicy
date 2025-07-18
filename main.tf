@@ -76,6 +76,11 @@ module "test1" {
   scope = "/providers/Microsoft.Management/managementGroups/cisanetmg"
 }
 
+module "sub1" {
+  source = "./Modules/azurerm_subscription"
+
+  subscription_name = "russellanderson.net"
+}
 
 
 
