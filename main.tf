@@ -63,6 +63,12 @@ module "vm" {
   parent_management_group_id = module.csd.id
 }
 
+module "test1" {
+  source = "./Modules/azurerm_role_definition"
+
+}
+
+
 
 
 ///////////////////////////////////////////////////
