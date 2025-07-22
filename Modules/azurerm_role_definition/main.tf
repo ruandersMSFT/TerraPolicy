@@ -1,14 +1,16 @@
 resource "azurerm_role_definition" "this" {
-  name        = "my-custom-role"
-  scope       = data.azurerm_subscription.primary.id
-  description = "This is a custom role created via Terraform"
+  name        = var.name
+  role_definition_id = var.role_definition_id
+  scope       = var.scope
+  description = var.description
 
-  permissions {
-    actions     = ["*"]
-    not_actions = []
+  dynamic "permissions" {
+    for_each = var.permissions
+    content {
+      actions     = permissions.value.actions
+      not_actions = permissions.value.not_actions
+    }
   }
 
-  assignable_scopes = [
-    data.azurerm_subscription.primary.id, # /subscriptions/00000000-0000-0000-0000-000000000000
-  ]
+  assignable_scopes = var.assignable_scopes
 }

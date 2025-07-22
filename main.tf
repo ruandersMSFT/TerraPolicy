@@ -5,6 +5,8 @@ module "cisanetmg" {
 
   name                = "cisanetmg"
   display_name        = "cisanetmg"
+
+  subscription_ids = [module.sub1.id]
 }
 
 module "devmg" {
@@ -61,6 +63,27 @@ module "vm" {
   name                = "vm"
   display_name        = "vm"
   parent_management_group_id = module.csd.id
+}
+
+module "test1" {
+  source = "./Modules/azurerm_role_definition"
+
+  assignable_scopes = [module.cisanetmg.id]
+  description = "This is a custom role created via Terraform"
+  name = "my-custom-role2"
+  permissions = [{
+    actions     = ["*"]
+    not_actions = []
+  }]
+  scope = "/providers/Microsoft.Management/managementGroups/cisanetmg"
+}
+
+module "sub1" {
+  source = "./Modules/azurerm_subscription"
+
+  alias = "56c86b74-e91b-4093-8c90-6220563357c3"
+  subscription_name = "russellanderson.net"
+  subscription_id   = "56c86b74-e91b-4093-8c90-6220563357c3"
 }
 
 

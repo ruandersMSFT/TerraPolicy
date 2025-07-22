@@ -1,0 +1,17 @@
+{
+    "properties": {
+        "roleName": "CISANet Role Definition Manager",
+        "description": "Can manage custom role definitions but not assign roles or manage other resources.",
+        "assignableScopes": [
+            "/providers/Microsoft.Management/managementGroups/cisanetmg"
+        ],
+        "permissions": [
+            {
+                "actions": ["Microsoft.Authorization/roleDefinitions/*"],
+                "notActions": [],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}
