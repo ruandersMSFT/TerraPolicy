@@ -16,8 +16,10 @@ variable "name" {
 variable "permissions" {
   description = "A list of permission blocks to assign to the role definition."
   type = list(object({
-    actions     = list(string)
-    not_actions = list(string)
+    actions          = list(string)
+    data_actions     = list(string)
+    not_actions      = list(string)
+    not_data_actions = list(string)
   }))
   default = []
 }

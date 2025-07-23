@@ -1,0 +1,42 @@
+{
+  "properties": {
+    "displayName": "Enforce Premium SKU for Key Vaults",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Ensures that all Key Vaults use the Premium SKU. If not, the policy modifies the SKU to Premium.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Key Vault"
+    },
+    "parameters": {},
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.KeyVault/vaults"
+          },
+          {
+            "field": "Microsoft.KeyVault/vaults/sku.name",
+            "notEquals": "premium"
+          }
+        ]
+      },
+      "then": {
+        "effect": "modify",
+        "details": {
+          "roleDefinitionIds": [
+            "/providers/Microsoft.Authorization/roleDefinitions/00482a5a-887f-4fb3-b363-3b7fe8e74483"
+          ],
+          "operations": [
+            {
+              "operation": "addOrReplace",
+              "field": "Microsoft.KeyVault/vaults/sku.name",
+              "value": "premium"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
