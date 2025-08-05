@@ -16,6 +16,28 @@ variable "parent_management_group_id" {
   default     = null
 }
 
+variable "policy_definitions" {
+  description = "A map of policy definitions to be assigned to the management group."
+  type        = map(object({
+    name         = string
+    display_name = string
+    file_path    = string
+    mode         = string
+    policy_type  = string
+  }))
+  default     = {}
+}
+
+variable "policy_set_definitions" {
+  description = "A map of policy set definitions to assign to the management group."
+  type        = map(object({
+    name         = string
+    display_name = string
+    file_path    = string
+  }))
+  default     = {}
+}
+
 variable "subscription_ids" {
   description = "(Optional) A list of Subscription GUIDs which should be assigned to the Management Group."
   type        = list(string)

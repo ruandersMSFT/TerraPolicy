@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "displayName": "Enforce Premium SKU for Key Vaults",
+    "policyType": "Custom",
+    "mode": "Indexed",
+    "description": "Ensures that all Key Vaults use the Premium SKU. If not, the policy modifies the SKU to Premium.",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Key Vault"
+    },
+    "parameters": {
+        "allowedLocations": {
+          "type": "Array",
+          "metadata": {
+            "displayName": "Allowed locations",
+            "description": "The list of allowed locations for resources."
+          }
+        }
+      }
+  }
+}
