@@ -6,13 +6,12 @@ resource "azurerm_management_group_policy_set_definition" "this" {
 
   parameters          = length(local.parameters) > 0 ? jsonencode(local.parameters) : null
 
-  policy_definition_reference {
-    version              = "1.0.*"
-    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988"
-    parameter_values     = <<VALUE
-    {
-      "listOfAllowedLocations": {"value": "[parameters('allowedLocations')]"}
+  dynamic "policy_definition_reference" {
+    for_each = local.policy_definition_references
+    content {
+      policy_definition_id = policy_definition_reference.value.policy_definition_id
+      version              = lookup(policy_definition_reference.value, "version", null)
+      parameter_values     = lookup(policy_definition_reference.value, "parameter_values", null)
     }
-    VALUE
   }
 }

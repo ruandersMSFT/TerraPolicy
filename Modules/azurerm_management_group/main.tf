@@ -19,11 +19,13 @@ module "policy_definitions" {
 
 module "policy_set_definitions" {
   source = "../azurerm_management_group_policy_set_definition"
-
   for_each = var.policy_set_definitions
 
   name         = each.value.name
   display_name = each.value.display_name
   file_path    = each.value.file_path
   management_group_id = azurerm_management_group.this.id
+  policy_definition_references = each.value.policy_definition_references
+
+  depends_on = [ module.policy_definitions ]
 }

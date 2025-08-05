@@ -34,8 +34,13 @@ variable "policy_set_definitions" {
     name         = string
     display_name = string
     file_path    = string
+    policy_definition_references = optional(list(object({
+      policy_definition_id = string
+      version              = optional(string)
+      parameter_values     = optional(any)
+    })), null)
   }))
-  default     = {}
+  default     = null
 }
 
 variable "subscription_ids" {

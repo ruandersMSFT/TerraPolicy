@@ -105,6 +105,7 @@ module "mg1" {
       name         = "accTestPolicy2"
       display_name = "acceptance test policy definition 2"
       file_path    = "./Policies/policysettest.json"
+
     }
 
   }

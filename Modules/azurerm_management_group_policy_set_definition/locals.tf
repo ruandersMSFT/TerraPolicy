@@ -6,4 +6,6 @@ locals {
   )))
 
   parameters  = coalesce(var.parameters, try((local.policy_object).properties.parameters, {}))
+  policy_definition_references = var.policy_definition_references != null ? var.policy_definition_references : try((local.policy_object).properties.policy_definition_references, null)
+
 }

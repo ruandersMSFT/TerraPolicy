@@ -25,6 +25,16 @@ variable "parameters" {
   default     = null
 }
 
+variable "policy_definition_references" {
+  description = "A list of policy definition references to include in the policy set."
+  type        = list(object({
+    policy_definition_id = string
+    version              = optional(string)
+    parameter_values     = optional(any)
+  }))
+  default     = null
+}
+
 variable "policy_type" {
   description = "(Required) The Type of the Policy Set Definition."
   type        = string
