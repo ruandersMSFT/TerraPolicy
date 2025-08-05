@@ -112,6 +112,16 @@ module "mg1" {
   subscription_ids = []
 }
 
+module "a" {
+  source = "./Modules/azurerm_management_group_policy_set_definition"
+
+        name         = "accTestPolicy"
+      display_name = "acceptance test policy definition"
+      file_path    = "./Policies/policysettest.json"
+      policy_type  = "Custom"
+      management_group_id = module.mg1.id
+}
+
 module "mg1a" {
   source = "./Modules/azurerm_management_group"
 

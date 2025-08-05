@@ -17,6 +17,7 @@ module "policy_definitions" {
   policy_type = each.value.policy_type
 }
 
+/*
 module "policy_set_definitions" {
   source = "../azurerm_management_group_policy_set_definition"
   for_each = var.policy_set_definitions
@@ -29,3 +30,4 @@ module "policy_set_definitions" {
 
   depends_on = [ module.policy_definitions ]
 }
+*/

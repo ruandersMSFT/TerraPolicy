@@ -1,31 +1,46 @@
 {
+  "name": "Enforce-Guardrails-Storage",
+  "type": "Microsoft.Authorization/policySetDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
   "properties": {
-    "displayName": "Enforce Premium SKU for Key Vaults",
     "policyType": "Custom",
-    "mode": "Indexed",
-    "description": "Ensures that all Key Vaults use the Premium SKU. If not, the policy modifies the SKU to Premium.",
+    "displayName": "Enforce recommended guardrails for Storage Account",
+    "description": "This policy initiative is a group of policies that ensures Storage is compliant per regulated Landing Zones.",
     "metadata": {
-      "version": "1.0.0",
-      "category": "Key Vault"
+      "version": "1.1.0",
+      "category": "Storage",
+      "source": "https://github.com/Azure/Enterprise-Scale/",
+      "alzCloudEnvironments": [
+        "AzureCloud",
+        "AzureChinaCloud",
+        "AzureUSGovernment"
+      ]
     },
     "parameters": {
-        "allowedLocations": {
-          "type": "Array",
-          "metadata": {
-            "displayName": "Allowed locations",
-            "description": "The list of allowed locations for resources."
-          }
-        }
-      },
-    "policy_definition_references": {
-      "allowedLocations": {
-        "policy_definition_id": "/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988",
-        "parameter_values": {
-          "listOfAllowedLocations": {
-            "value": "[parameters('allowedLocations')]"
-          }
-        }
+      "storageClassicToArm": {
+        "type": "string",
+        "defaultValue": "Deny",
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ]
       }
-    }
+    },
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "Deny-Storage-Classic",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/37e0d2fe-28a5-43d6-a273-67d37d1f5606",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('storageClassicToArm')]"
+          }
+        },
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
+      }
+   ],
+    "policyDefinitionGroups": null
   }
 }
