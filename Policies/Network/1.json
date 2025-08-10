@@ -2,7 +2,6 @@
     "name": "pol-deploy-pe-dns-records-single-dns-zone-all-locations",
     "properties": {
       "displayName": "Configure Private Endpoints to use Private DNS Zones (Single DNS Zone All Locations)",
-      "description": "This policy creates a Private DNS Group link for a Azure PaaS Private Endpoint Resource that requires a DNS record in a single Private DNS zone.",
       "metadata": {
         "category": "Network Security",
         "version": "1.0.0",

@@ -1,5 +1,5 @@
 resource "azurerm_policy_definition" "this" {
-  description         = var.description
+  description         = local.description
   display_name        = var.display_name
   management_group_id = var.management_group_id
   metadata            = jsonencode(local.metadata)

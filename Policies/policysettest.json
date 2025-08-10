@@ -1,0 +1,46 @@
+{
+  "name": "Enforce-Guardrails-Storage",
+  "type": "Microsoft.Authorization/policySetDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
+  "properties": {
+    "policyType": "Custom",
+    "displayName": "Enforce recommended guardrails for Storage Account",
+    "description": "This policy initiative is a group of policies that ensures Storage is compliant per regulated Landing Zones.",
+    "metadata": {
+      "version": "1.1.0",
+      "category": "Storage",
+      "source": "https://github.com/Azure/Enterprise-Scale/",
+      "alzCloudEnvironments": [
+        "AzureCloud",
+        "AzureChinaCloud",
+        "AzureUSGovernment"
+      ]
+    },
+    "parameters": {
+      "storageClassicToArm": {
+        "type": "string",
+        "defaultValue": "Deny",
+        "allowedValues": [
+          "Audit",
+          "Deny",
+          "Disabled"
+        ]
+      }
+    },
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "Deny-Storage-Classic",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/37e0d2fe-28a5-43d6-a273-67d37d1f5606",
+        "parameters": {
+          "effect": {
+            "value": "[parameters('storageClassicToArm')]"
+          }
+        },
+        "groupNames": [],
+        "definitionVersion": "1.*.*"
+      }
+   ],
+    "policyDefinitionGroups": null
+  }
+}
