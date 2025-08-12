@@ -26,6 +26,13 @@ resource "azurerm_virtual_network" "example" {
   address_space       = ["10.0.0.0/16"]
 }
 
+resource "azurerm_subnet" "AzureBastionSubnet" {
+  name                 = "AzureBastionSubnet"
+  resource_group_name  = azurerm_resource_group.eastustest.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefixes     = ["10.0.1.64/27"]
+}
+
 resource "azurerm_subnet" "outbound" {
   name                 = "outbounddns"
   resource_group_name  = azurerm_resource_group.eastustest.name
@@ -54,6 +61,31 @@ resource "azurerm_subnet" "inbound" {
       name    = "Microsoft.Network/dnsResolvers"
     }
   }
+}
+
+module "bastionhost" {
+  source = "./Modules/azurerm_bastion_host"
+
+  name                    = "example-bastion"
+  resource_group_name     = azurerm_resource_group.eastustest.name  
+  location                = azurerm_resource_group.eastustest.location
+  virtual_network_id      = azurerm_virtual_network.example.id
+  copy_paste_enabled      = true
+  file_copy_enabled       = true
+  ip_connect_enabled      = true
+  kerberos_enabled        = false
+  ip_configuration = {
+    name                 = "configuration"
+    subnet_id            = azurerm_subnet.AzureBastionSubnet.id
+    public_ip_address_id = "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/example-resource-group/providers/Microsoft.Network/publicIPAddresses/publicIPAddressesValue" //  null // Will use the default public IP created in the module
+  }
+  scale_units             = 2
+  session_recording_enabled = false
+  tags = {
+    environment = "test"
+    owner       = "devops"
+  }
+  sku = "Basic"
 }
 
 /*
