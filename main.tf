@@ -56,6 +56,7 @@ resource "azurerm_subnet" "inbound" {
   }
 }
 
+/*
 module "privatednsresolver" {
   source = "./Modules/azurerm_private_dns_resolver"
 
@@ -94,3 +95,4 @@ module "privatednsresolver" {
     }
   }
 }
+*/
