@@ -131,6 +131,9 @@ module "privatednsresolver" {
 }
 */
 
+data "azurerm_management_group" "cisanetmg" {
+name = "cisanetmg"
+}
 
 module "p1" {
   source = "./Modules/azurerm_policy_definition"
@@ -139,7 +142,20 @@ module "p1" {
   display_name = "test"
   mode         = "All"
   policy_type = "Custom"
+  management_group_id = data.azurerm_management_group.cisanetmg.id
   file_path = "./Policies/KeyVault/Premium.json"
+
+  management_group_policy_assignments = {
+    "CISANETMG" = {
+      display_name         = "test"
+      enforce              = true
+      identity             = {
+        type         = "SystemAssigned"
+      }
+      location             = "East US"
+      management_group_id  = data.azurerm_management_group.cisanetmg.id
+    }
+  }
 
   subscription_policy_assignments = {
     "VisualStudioSubscription" = {
