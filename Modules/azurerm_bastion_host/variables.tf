@@ -70,12 +70,6 @@ variable "sku" {
   default     = "Basic"
 }
 
-variable "tags" {
-  description = "A mapping of tags to assign to the Azure Bastion Host."
-  type        = map(string)
-  default     = null
-}
-
 variable "tunneling_enabled" {
   description = "Enable tunneling functionality for the Azure Bastion Host."
   type        = bool
@@ -91,5 +85,11 @@ variable "virtual_network_id" {
 variable "zones" {
   description = "A list of availability zones for the Azure Bastion Host."
   type        = list(string)
+  default     = null
+}
+
+variable "tags" {
+  description = "A mapping of tags to assign to the Azure Bastion Host."
+  type        = map(string)
   default     = null
 }

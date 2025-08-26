@@ -63,6 +63,7 @@ resource "azurerm_subnet" "inbound" {
   }
 }
 
+/*
 module "bastionhost" {
   source = "./Modules/azurerm_bastion_host"
 
@@ -87,6 +88,7 @@ module "bastionhost" {
   }
   sku = "Basic"
 }
+*/
 
 /*
 module "privatednsresolver" {
@@ -128,3 +130,27 @@ module "privatednsresolver" {
   }
 }
 */
+
+
+module "p1" {
+  source = "./Modules/azurerm_policy_definition"
+
+  name = "test"
+  display_name = "test"
+  mode         = "All"
+  policy_type = "Custom"
+  file_path = "./Policies/KeyVault/Premium.json"
+
+  subscription_policy_assignments = {
+    "VisualStudioSubscription" = {
+      display_name         = "test"
+      enforce              = true
+      identity             = {
+        type         = "SystemAssigned"
+      }
+      location             = "East US"
+      subscription_id      = "/subscriptions/070cfebd-3e63-42a5-ba50-58de1db7496e"
+    }
+  }
+  
+}

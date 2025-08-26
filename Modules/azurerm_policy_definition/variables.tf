@@ -27,6 +27,44 @@ variable "management_group_id" {
   default     = null
 }
 
+variable "management_group_policy_assignments" {
+  description = "A map of management group IDs to their policy assignment details."
+  type = map(object({
+    description  = optional(string)
+    display_name = optional(string)
+    enforce      = optional(bool, true)
+    identity = optional(object({
+      type         = string
+      identity_ids = optional(list(string), null)
+    }))
+    location            = optional(string)
+    management_group_id = string
+    metadata            = optional(any, null)
+    non_compliance_message = optional(object({
+      content                        = string
+      policy_definition_reference_id = optional(string)
+    }))
+    not_scopes = optional(list(string))
+    parameters = optional(any, null)
+    overrides = optional(list(object({
+      value = string
+      selectors = optional(list(object({
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+    resource_selectors = optional(list(object({
+      name = string
+      selectors = optional(list(object({
+        kind   = string
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+  }))
+  default = {}
+}
+
 variable "metadata" {
   type        = any
   description = "The metadata for the policy definition. This is a JSON object representing additional metadata that should be stored with the policy definition. Omitting this will fallback to meta in the definition or merge var.policy_category and var.policy_version"
@@ -53,6 +91,44 @@ variable "rule" {
   type        = any
   description = "The policy rule for the policy definition. This is a JSON object representing the rule that contains an if and a then block. Omitting this assumes the rules are located in the policy file"
   default     = null
+}
+
+variable "subscription_policy_assignments" {
+  description = "A map of subscription IDs to their policy assignment details."
+  type = map(object({
+    description  = optional(string)
+    display_name = optional(string)
+    enforce      = optional(bool, true)
+    identity = optional(object({
+      type         = string
+      identity_ids = optional(list(string), null)
+    }))
+    location = optional(string)
+    metadata = optional(any, null)
+    non_compliance_message = optional(object({
+      content                        = string
+      policy_definition_reference_id = optional(string)
+    }))
+    not_scopes = optional(list(string))
+    parameters = optional(any, null)
+    overrides = optional(list(object({
+      value = string
+      selectors = optional(list(object({
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+    resource_selectors = optional(list(object({
+      name = string
+      selectors = optional(list(object({
+        kind   = string
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+    subscription_id = string
+  }))
+  default = {}
 }
 
 variable "policy_type" {
