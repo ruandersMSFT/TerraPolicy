@@ -46,6 +46,7 @@ variable "management_group_policy_assignments" {
     }))
     not_scopes = optional(list(string))
     parameters = optional(any, null)
+    policy_exemptions = optional(any, {})
     overrides = optional(list(object({
       value = string
       selectors = optional(list(object({
@@ -85,6 +86,94 @@ variable "parameters" {
   type        = any
   description = "Parameters for the policy definition. This field is a JSON object representing the parameters of your policy definition. Omitting this assumes the parameters are located in the policy file"
   default     = null
+}
+
+
+variable "policy_type" {
+  description = "The ID of the Management Group to assign the Policy Definition to."
+  type        = string
+}
+
+variable "policy_version" {
+  description = "The version of the policy definition. This is a string value that represents the category of the policy definition. Omitting this will fallback to meta in the definition or var.policy_version"
+  type        = string
+  default     = null
+}
+
+variable "resource_policy_assignments" {
+  description = "A map of resource IDs to their policy assignment details."
+  type = map(object({
+    description  = optional(string)
+    display_name = optional(string)
+    enforce      = optional(bool, true)
+    identity = optional(object({
+      type         = string
+      identity_ids = optional(list(string), null)
+    }))
+    location = optional(string)
+    metadata = optional(any, null)
+    non_compliance_message = optional(object({
+      content                        = string
+      policy_definition_reference_id = optional(string)
+    }))
+    not_scopes = optional(list(string))
+    parameters = optional(any, null)
+    overrides = optional(list(object({
+      value = string
+      selectors = optional(list(object({
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+    resource_id = string
+    resource_selectors = optional(list(object({
+      name = string
+      selectors = optional(list(object({
+        kind   = string
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+  }))
+  default = {}
+}
+
+variable "resource_group_policy_assignments" {
+  description = "A map of resource group IDs to their policy assignment details."
+  type = map(object({
+    description  = optional(string)
+    display_name = optional(string)
+    enforce      = optional(bool, true)
+    identity = optional(object({
+      type         = string
+      identity_ids = optional(list(string), null)
+    }))
+    location = optional(string)
+    metadata = optional(any, null)
+    non_compliance_message = optional(object({
+      content                        = string
+      policy_definition_reference_id = optional(string)
+    }))
+    not_scopes = optional(list(string))
+    parameters = optional(any, null)
+    overrides = optional(list(object({
+      value = string
+      selectors = optional(list(object({
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+    resource_group_id = string
+    resource_selectors = optional(list(object({
+      name = string
+      selectors = optional(list(object({
+        kind   = string
+        in     = list(string)
+        not_in = list(string)
+      })))
+    })))
+  }))
+  default = {}
 }
 
 variable "rule" {
@@ -131,13 +220,3 @@ variable "subscription_policy_assignments" {
   default = {}
 }
 
-variable "policy_type" {
-  description = "The ID of the Management Group to assign the Policy Definition to."
-  type        = string
-}
-
-variable "policy_version" {
-  description = "The version of the policy definition. This is a string value that represents the category of the policy definition. Omitting this will fallback to meta in the definition or var.policy_version"
-  type        = string
-  default     = null
-}

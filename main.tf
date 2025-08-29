@@ -132,41 +132,55 @@ module "privatednsresolver" {
 */
 
 data "azurerm_management_group" "cisanetmg" {
-name = "cisanetmg"
+  name = "cisanetmg"
+}
+
+data "azurerm_management_group" "prodmg" {
+  name = "prodmg"
 }
 
 module "p1" {
   source = "./Modules/azurerm_policy_definition"
 
-  name = "test"
-  display_name = "test"
-  mode         = "All"
-  policy_type = "Custom"
+  name                = "test"
+  display_name        = "test"
+  mode                = "All"
+  policy_type         = "Custom"
   management_group_id = data.azurerm_management_group.cisanetmg.id
-  file_path = "./Policies/KeyVault/Premium.json"
+  file_path           = "./Policies/KeyVault/Premium.json"
 
   management_group_policy_assignments = {
     "CISANETMG" = {
-      display_name         = "test"
-      enforce              = true
-      identity             = {
-        type         = "SystemAssigned"
+      display_name = "test"
+      enforce      = true
+      identity = {
+        type = "SystemAssigned"
       }
-      location             = "East US"
-      management_group_id  = data.azurerm_management_group.cisanetmg.id
+      location            = "East US"
+      management_group_id = data.azurerm_management_group.cisanetmg.id
+      policy_exemptions = {
+        "exemption1" = {
+          display_name = null
+          description = null
+          management_group_id = data.azurerm_management_group.prodmg.id
+          exemption_category  = "Mitigated"
+          expires_on = null
+          metadata = null
+          policy_definition_reference_ids = []
+        }
+      }
     }
   }
 
   subscription_policy_assignments = {
     "VisualStudioSubscription" = {
-      display_name         = "test"
-      enforce              = true
-      identity             = {
-        type         = "SystemAssigned"
+      display_name = "test"
+      enforce      = true
+      identity = {
+        type = "SystemAssigned"
       }
-      location             = "East US"
-      subscription_id      = "/subscriptions/070cfebd-3e63-42a5-ba50-58de1db7496e"
+      location        = "East US"
+      subscription_id = "/subscriptions/070cfebd-3e63-42a5-ba50-58de1db7496e"
     }
   }
-  
 }
