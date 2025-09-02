@@ -160,13 +160,8 @@ module "p1" {
       management_group_id = data.azurerm_management_group.cisanetmg.id
       policy_exemptions = {
         "exemption1" = {
-          display_name = null
-          description = null
           management_group_id = data.azurerm_management_group.prodmg.id
           exemption_category  = "Mitigated"
-          expires_on = null
-          metadata = null
-          policy_definition_reference_ids = []
         }
       }
     }

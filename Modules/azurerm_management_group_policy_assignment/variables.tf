@@ -61,8 +61,6 @@ variable "not_scopes" {
   default     = []
 }
 
-
-
 variable "identity" {
   description = "The identity block for the policy assignment."
   type = object({
@@ -89,7 +87,15 @@ variable "content" {
 
 variable "policy_exemptions" {
   description = "Map of policy exemptions."
-  type        = any
+  type        = map(object({
+    display_name                     = optional(string, null)
+    description                      = optional(string, null)
+    management_group_id              = string
+    exemption_category               = string
+    expires_on                       = optional(string, null)
+    metadata                         = optional(any, null)
+    policy_definition_reference_ids  = optional(list(string), [])
+  }))
   default     = {}
 }
 
