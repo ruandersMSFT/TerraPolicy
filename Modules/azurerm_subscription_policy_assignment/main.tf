@@ -1,15 +1,15 @@
-resource "azurerm_management_group_policy_assignment" "this" {
+resource "azurerm_subscription_policy_assignment" "this" {
 
   description          = var.description
   display_name         = var.display_name
   enforce              = var.enforce
   name                 = var.name
   location             = var.location
-  management_group_id  = var.management_group_id
   metadata             = var.metadata
   not_scopes           = var.not_scopes
   parameters           = var.parameters
   policy_definition_id = var.policy_definition_id
+  subscription_id      = var.subscription_id
 
   dynamic "identity" {
     for_each = (var.identity != null) ? [var.identity] : []
@@ -65,16 +65,16 @@ resource "azurerm_management_group_policy_assignment" "this" {
   }
 }
 
-resource "azurerm_management_group_policy_exemption" "this" {
+resource "azurerm_subscription_policy_exemption" "this" {
   for_each = var.policy_exemptions
 
   description                     = each.value.description
   display_name                    = each.value.display_name
   exemption_category              = each.value.exemption_category
   expires_on                      = each.value.expires_on
-  management_group_id             = each.value.management_group_id
   metadata                        = each.value.metadata
   name                            = each.key
-  policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
+  policy_assignment_id            = azurerm_subscription_policy_assignment.this.id
   policy_definition_reference_ids = each.value.policy_definition_reference_ids
+  subscription_id                 = each.value.subscription_id
 }

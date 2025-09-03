@@ -44,8 +44,8 @@ variable "management_group_policy_assignments" {
       content                        = string
       policy_definition_reference_id = optional(string)
     }))
-    not_scopes = optional(list(string))
-    parameters = optional(any, null)
+    not_scopes        = optional(list(string))
+    parameters        = optional(any, null)
     policy_exemptions = optional(any, {})
     overrides = optional(list(object({
       value = string
@@ -198,8 +198,9 @@ variable "subscription_policy_assignments" {
       content                        = string
       policy_definition_reference_id = optional(string)
     }))
-    not_scopes = optional(list(string))
-    parameters = optional(any, null)
+    not_scopes        = optional(list(string))
+    parameters        = optional(any, null)
+    policy_exemptions = optional(any, {})
     overrides = optional(list(object({
       value = string
       selectors = optional(list(object({

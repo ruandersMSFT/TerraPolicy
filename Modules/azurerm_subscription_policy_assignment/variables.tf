@@ -55,11 +55,6 @@ variable "management_group_policy_assignments" {
   default     = {}
 }
 
-variable "management_group_id" {
-  description = "The ID of the management group."
-  type        = string
-}
-
 variable "metadata" {
   description = "Metadata for the policy assignment."
   type        = any
@@ -145,6 +140,11 @@ variable "resource_selector" {
   description = "Resource selector block."
   type        = any
   default     = null
+}
+
+variable "subscription_id" {
+  description = "The ID of the subscription."
+  type        = string
 }
 
 variable "value" {
