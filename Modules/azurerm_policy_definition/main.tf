@@ -20,6 +20,7 @@ module "management_group_policy_assignment" {
   identity               = each.value.identity
   location               = each.value.location
   management_group_id    = each.value.management_group_id
+  management_group_policy_exemptions      = each.value.management_group_policy_exemptions
   metadata               = each.value.metadata
   name                   = each.key
   non_compliance_message = each.value.non_compliance_message
@@ -27,8 +28,8 @@ module "management_group_policy_assignment" {
   overrides              = each.value.overrides
   parameters             = each.value.parameters
   policy_definition_id   = azurerm_policy_definition.this.id
-  policy_exemptions      = each.value.policy_exemptions
   resource_selectors     = each.value.resource_selectors
+  subscription_policy_exemptions      = each.value.subscription_policy_exemptions
 }
 
 module "subscription_policy_assignment" {

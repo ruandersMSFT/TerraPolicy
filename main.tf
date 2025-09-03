@@ -158,7 +158,7 @@ module "p1" {
       }
       location            = "East US"
       management_group_id = data.azurerm_management_group.cisanetmg.id
-      policy_exemptions = {
+      management_group_policy_exemptions = {
         "exemption1" = {
           management_group_id = data.azurerm_management_group.prodmg.id
           exemption_category  = "Mitigated"

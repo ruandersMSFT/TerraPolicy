@@ -39,6 +39,7 @@ variable "management_group_policy_assignments" {
     }))
     location            = optional(string)
     management_group_id = string
+    management_group_policy_exemptions = optional(any, {})
     metadata            = optional(any, null)
     non_compliance_message = optional(object({
       content                        = string
@@ -46,7 +47,6 @@ variable "management_group_policy_assignments" {
     }))
     not_scopes        = optional(list(string))
     parameters        = optional(any, null)
-    policy_exemptions = optional(any, {})
     overrides = optional(list(object({
       value = string
       selectors = optional(list(object({
@@ -62,6 +62,7 @@ variable "management_group_policy_assignments" {
         not_in = list(string)
       })))
     })))
+   subscription_policy_exemptions = optional(any, {})
   }))
   default = {}
 }

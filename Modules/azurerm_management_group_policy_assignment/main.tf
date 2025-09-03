@@ -66,7 +66,7 @@ resource "azurerm_management_group_policy_assignment" "this" {
 }
 
 resource "azurerm_management_group_policy_exemption" "this" {
-  for_each = var.policy_exemptions
+  for_each = var.management_group_policy_exemptions
 
   description                     = each.value.description
   display_name                    = each.value.display_name
@@ -77,4 +77,47 @@ resource "azurerm_management_group_policy_exemption" "this" {
   name                            = each.key
   policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
   policy_definition_reference_ids = each.value.policy_definition_reference_ids
+}
+
+resource "azurerm_subscription_policy_exemption" "this" {
+  for_each = var.subscription_policy_exemptions
+
+  description                     = each.value.description
+  display_name                    = each.value.display_name
+  exemption_category              = each.value.exemption_category
+  expires_on                      = each.value.expires_on
+  metadata                        = each.value.metadata
+  name                            = each.key
+  policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
+  policy_definition_reference_ids = each.value.policy_definition_reference_ids
+  subscription_id                 = each.value.subscription_id
+}
+
+
+resource "azurerm_resource_group_policy_exemption" "this" {
+  for_each = var.resource_group_policy_exemptions
+
+  description                     = each.value.description
+  display_name                    = each.value.display_name
+  exemption_category              = each.value.exemption_category
+  expires_on                      = each.value.expires_on
+  metadata                        = each.value.metadata
+  name                            = each.key
+  policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
+  policy_definition_reference_ids = each.value.policy_definition_reference_ids
+  resource_group_id               = each.value.resource_group_id
+}
+
+resource "azurerm_resource_policy_exemption" "this" {
+  for_each = var.resource_policy_exemptions
+
+  description                     = each.value.description
+  display_name                    = each.value.display_name
+  exemption_category              = each.value.exemption_category
+  expires_on                      = each.value.expires_on
+  metadata                        = each.value.metadata
+  name                            = each.key
+  policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
+  policy_definition_reference_ids = each.value.policy_definition_reference_ids
+  resource_id                     = each.value.resource_id
 }
