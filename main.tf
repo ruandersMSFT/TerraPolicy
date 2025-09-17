@@ -164,12 +164,60 @@ module "p1" {
           exemption_category  = "Mitigated"
         }
       }
+      subscription_policy_exemptions = {
+        "subscriptionexemption1" = {
+          subscription_id = "/subscriptions/56c86b74-e91b-4093-8c90-6220563357c3"
+          exemption_category  = "Mitigated"
+        }
+      }
     }
   }
 
   subscription_policy_assignments = {
     "VisualStudioSubscription" = {
       display_name = "test"
+      enforce      = true
+      identity = {
+        type = "SystemAssigned"
+      }
+      location        = "East US"
+      subscription_id = "/subscriptions/070cfebd-3e63-42a5-ba50-58de1db7496e"
+    }
+  }
+}
+
+
+module "p2" {
+  source = "./Modules/azurerm_policy_definition"
+
+  name                = "test2"
+  display_name        = "test2"
+  mode                = "All"
+  policy_type         = "Custom"
+  management_group_id = data.azurerm_management_group.cisanetmg.id
+  file_path           = "./Policies/KeyVault/Premium.json"
+
+  management_group_policy_assignments = {
+    "CISANETMG2" = {
+      display_name = "test2"
+      enforce      = true
+      identity = {
+        type = "SystemAssigned"
+      }
+      location            = "East US"
+      management_group_id = data.azurerm_management_group.cisanetmg.id
+      management_group_policy_exemptions = {
+        "exemption2" = {
+          management_group_id = data.azurerm_management_group.prodmg.id
+          exemption_category  = "Mitigated"
+        }
+      }
+    }
+  }
+
+  subscription_policy_assignments = {
+    "VisualStudioSubscription2" = {
+      display_name = "test2"
       enforce      = true
       identity = {
         type = "SystemAssigned"
