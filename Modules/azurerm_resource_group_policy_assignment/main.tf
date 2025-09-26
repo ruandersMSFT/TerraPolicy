@@ -24,8 +24,8 @@ resource "azurerm_resource_group_policy_assignment" "this" {
     for_each = (var.non_compliance_message != null) ? [var.non_compliance_message] : []
 
     content {
-      content                        = var.content
-      policy_definition_reference_id = var.policy_definition_reference_id
+      content                        = var.non_compliance_message.content
+      policy_definition_reference_id = var.non_compliance_message.policy_definition_reference_id
     }
   }
 

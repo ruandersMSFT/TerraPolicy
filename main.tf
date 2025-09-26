@@ -170,6 +170,9 @@ module "p1" {
           exemption_category  = "Mitigated"
         }
       }
+      non_compliance_message = {
+        content = "This is non compliance message2"
+      }
     }
   }
 
