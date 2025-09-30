@@ -62,12 +62,11 @@ foreach ($mg in $managementGroups) {
                     Add-Content -Path "1.txt" -Value "        `"$($exemption.Name)`" = {"
                     Add-Content -Path "1.txt" -Value "          management_group_id = `"$($managementGroupException.Id)`""
                     Add-Content -Path "1.txt" -Value "          exemption_category  = `"$($exemption.ExemptionCategory)`""
-                    Add-Content -Path "1.txt" -Value "          exemption_category  = `"$($exemption.ExemptionCategory)`""
                     Add-Content -Path "1.txt" -Value "          description = `"$($exemption.Description)`""
                     Add-Content -Path "1.txt" -Value "          display_name = `"$($exemption.DisplayName)`""
                     Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn)`""
                     Add-Content -Path "1.txt" -Value "          metadata = `"$($exemption.Metadata)`""
-                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = `"$($exemption.PolicyDefinitionReferenceIds)`""
+                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = `"$($exemption.PolicyDefinitionReferenceId)`""
                     Add-Content -Path "1.txt" -Value "        }"
                 }
             }
@@ -92,7 +91,7 @@ foreach ($mg in $managementGroups) {
                     Add-Content -Path "1.txt" -Value "          display_name = `"$($exemption.DisplayName)`""
                     Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn)`""
                     Add-Content -Path "1.txt" -Value "          metadata = `"$($exemption.Metadata)`""
-                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = `"$($exemption.PolicyDefinitionReferenceIds)`""
+                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = `"$($exemption.PolicyDefinitionReferenceId)`""
                     Add-Content -Path "1.txt" -Value "        }"
                 }
             }
