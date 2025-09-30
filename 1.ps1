@@ -21,6 +21,20 @@ foreach ($mg in $managementGroups) {
 
             Add-Content -Path "1.txt" -Value "For Policy Definition Id: $($policyAssignment.PolicyDefinitionId)"
             Add-Content -Path "1.txt" -Value ""
+
+            if ($policyAssignment.PolicyDefinitionId -like "/providers/Microsoft.Authorization/policySetDefinitions/*") {
+                Add-Content -Path "1.txt" -Value "module `"toreplace`" {"
+                Add-Content -Path "1.txt" -Value "  source = `"https://popscazsterraformmodules.blob.core.windows.net/azure-terraform-modules/azurerm_management_group_policy_assignemnt/20250917.zip`""
+                #Add-Content -Path "1.txt" -Value "  description = `"$($policyAssignment.Description)`""
+                Add-Content -Path "1.txt" -Value "  display_name = `"$($policyAssignment.DisplayName)`""
+                Add-Content -Path "1.txt" -Value "  enforce = `"$($policyAssignment.EnforcementMode)`""
+                #Add-Content -Path "1.txt" -Value "  expires_on = `"$($policyAssignment.ExpiresOn)`""
+                Add-Content -Path "1.txt" -Value "  location = `"$($policyAssignment.Location)`""
+                Add-Content -Path "1.txt" -Value "  management_group_id = `"$($policyAssignment.Scope)`""
+                Add-Content -Path "1.txt" -Value "  name = `"$($policyAssignment.Name)`""
+                Add-Content -Path "1.txt" -Value "  policy_definition_id = `"$($policyAssignment.PolicyDefinitionId)`""
+            }
+
             Add-Content -Path "1.txt" -Value "  management_group_policy_assignments = {"
             Add-Content -Path "1.txt" -Value "    `"$($policyAssignment.Name)`" = {"
             Add-Content -Path "1.txt" -Value "      display_name = `"$($policyAssignment.DisplayName)`""
@@ -30,6 +44,7 @@ foreach ($mg in $managementGroups) {
             Add-Content -Path "1.txt" -Value "      }"
             Add-Content -Path "1.txt" -Value "      location            = `"East US`""
             Add-Content -Path "1.txt" -Value "      management_group_id = `"$($policyAssignment.Scope)`""
+            Add-Content -Path "1.txt" -Value "      policy_definition_id = `"$($policyAssignment.PolicyDefinitionId)`""
             Add-Content -Path "1.txt" -Value "      management_group_policy_exemptions = {"
 
             foreach ($managementGroupException in $managementGroups) {
@@ -93,6 +108,11 @@ foreach ($mg in $managementGroups) {
 
             Add-Content -Path "1.txt" -Value "    }"
             Add-Content -Path "1.txt" -Value "  }"
+
+            if ($policyAssignment.PolicyDefinitionId -like "/providers/Microsoft.Authorization/policySetDefinitions/*") {
+                Add-Content -Path "1.txt" -Value "}"
+            }
+
             Add-Content -Path "1.txt" -Value ""
         }
     }
