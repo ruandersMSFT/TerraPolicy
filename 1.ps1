@@ -49,7 +49,7 @@ foreach ($mg in $managementGroups) {
 
             foreach ($managementGroupException in $managementGroups) {
                 Write-Host "Checking for exemptions in Management Group '$($managementGroupException.DisplayName)' - Get-AzPolicyExemption -PolicyAssignmentIdFilter $($policyAssignment.Id) -Scope $($managementGroupException.Id)"
-                $managementGroupPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope $managementGroupException.Id
+                $managementGroupPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope $managementGroupException.Id | Where-Object { $_.Scope -eq $managementGroupException.Id }
                 foreach ($exemption in $managementGroupPolicyExemptions) {
                     Write-Host " - Found exemption '$($exemption.Name)'"
 
@@ -74,7 +74,7 @@ foreach ($mg in $managementGroups) {
             Add-Content -Path "1.txt" -Value "      subscription_policy_exemptions = {"
             foreach ($subscriptionException in $subscriptions) {
                 Write-Host "Checking for exemptions in Subscription '$($subscriptionException.Name)' - Get-AzPolicyExemption -PolicyAssignmentIdFilter $($policyAssignment.Id) -Scope '/subscriptions/$($subscriptionException.Id)'"
-                $subscriptionPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope "/subscriptions/$($subscriptionException.Id)"
+                $subscriptionPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope "/subscriptions/$($subscriptionException.Id)" | Where-Object { $_.Scope -eq "/subscriptions/$($subscriptionException.Id)" }
                 foreach ($exemption in $subscriptionPolicyExemptions) {
                     Write-Host " - Found exemption '$($exemption.Name)'"
 
