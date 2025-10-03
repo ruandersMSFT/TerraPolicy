@@ -124,6 +124,7 @@ variable "management_group_policy_exemptions" {
     exemption_category              = string
     expires_on                      = optional(string, null)
     metadata                        = optional(any, null)
+    name                            = string
     policy_definition_reference_ids = optional(list(string), [])
   }))
   default = {}
@@ -137,6 +138,7 @@ variable "subscription_policy_exemptions" {
     exemption_category              = string
     expires_on                      = optional(string, null)
     metadata                        = optional(any, null)
+    name                            = string
     policy_definition_reference_ids = optional(list(string), [])
     subscription_id                 = string
   }))
@@ -151,6 +153,7 @@ variable "resource_policy_exemptions" {
     exemption_category              = string
     expires_on                      = optional(string, null)
     metadata                        = optional(any, null)
+    name                            = string
     policy_definition_reference_ids = optional(list(string), [])
     resource_id               = string
   }))
@@ -165,6 +168,7 @@ variable "resource_group_policy_exemptions" {
     exemption_category              = string
     expires_on                      = optional(string, null)
     metadata                        = optional(any, null)
+    name                            = string
     policy_definition_reference_ids = optional(list(string), [])
     resource_group_id               = string
   }))

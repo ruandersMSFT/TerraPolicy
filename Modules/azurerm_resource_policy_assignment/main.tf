@@ -64,17 +64,3 @@ resource "azurerm_resource_policy_assignment" "this" {
     }
   }
 }
-
-resource "azurerm_resource_policy_exemption" "this" {
-  for_each = var.policy_exemptions
-
-  description                     = each.value.description
-  display_name                    = each.value.display_name
-  exemption_category              = each.value.exemption_category
-  expires_on                      = each.value.expires_on
-  metadata                        = each.value.metadata
-  name                            = each.key
-  policy_assignment_id            = azurerm_resource_policy_assignment.this.id
-  policy_definition_reference_ids = each.value.policy_definition_reference_ids
-  resource_id                     = each.value.resource_id
-}

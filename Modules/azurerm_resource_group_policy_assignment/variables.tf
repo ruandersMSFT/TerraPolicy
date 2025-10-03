@@ -110,20 +110,6 @@ variable "policy_definition_id" {
   type        = string
 }
 
-variable "policy_exemptions" {
-  description = "Map of policy exemptions."
-  type = map(object({
-    display_name                    = optional(string, null)
-    description                     = optional(string, null)
-    management_group_id             = string
-    exemption_category              = string
-    expires_on                      = optional(string, null)
-    metadata                        = optional(any, null)
-    policy_definition_reference_ids = optional(list(string), [])
-  }))
-  default = {}
-}
-
 variable "policy_definition_reference_id" {
   description = "Reference ID for the policy definition."
   type        = string
@@ -133,6 +119,21 @@ variable "policy_definition_reference_id" {
 variable "resource_group_id" {
   description = "The ID of the resource group."
   type        = string
+}
+
+variable "resource_policy_exemptions" {
+  description = "Map of policy exemptions."
+  type = map(object({
+    display_name                    = optional(string, null)
+    description                     = optional(string, null)
+    exemption_category              = string
+    expires_on                      = optional(string, null)
+    metadata                        = optional(any, null)
+    name                            = string
+    policy_definition_reference_ids = optional(list(string), [])
+    resource_id               = string
+  }))
+  default = {}
 }
 
 variable "resource_selectors" {

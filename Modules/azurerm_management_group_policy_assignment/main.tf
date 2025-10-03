@@ -81,9 +81,16 @@ resource "azurerm_management_group_policy_exemption" "this" {
   expires_on                      = each.value.expires_on
   management_group_id             = each.value.management_group_id
   metadata                        = each.value.metadata
-  name                            = each.key
+  name                            = each.value.name
   policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
   policy_definition_reference_ids = each.value.policy_definition_reference_ids
+
+  lifecycle {
+    ignore_changes = [
+      # temporary until successfully imported and ready to redeploy with a matching configuration
+      policy_assignment_id
+    ]
+  }
 }
 
 resource "azurerm_subscription_policy_exemption" "this" {
@@ -94,10 +101,17 @@ resource "azurerm_subscription_policy_exemption" "this" {
   exemption_category              = each.value.exemption_category
   expires_on                      = each.value.expires_on
   metadata                        = each.value.metadata
-  name                            = each.key
+  name                            = each.value.name
   policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
   policy_definition_reference_ids = each.value.policy_definition_reference_ids
   subscription_id                 = each.value.subscription_id
+
+  lifecycle {
+    ignore_changes = [
+      # temporary until successfully imported and ready to redeploy with a matching configuration
+      policy_assignment_id
+    ]
+  }
 }
 
 
@@ -109,7 +123,7 @@ resource "azurerm_resource_group_policy_exemption" "this" {
   exemption_category              = each.value.exemption_category
   expires_on                      = each.value.expires_on
   metadata                        = each.value.metadata
-  name                            = each.key
+  name                            = each.value.name
   policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
   policy_definition_reference_ids = each.value.policy_definition_reference_ids
   resource_group_id               = each.value.resource_group_id
@@ -123,7 +137,7 @@ resource "azurerm_resource_policy_exemption" "this" {
   exemption_category              = each.value.exemption_category
   expires_on                      = each.value.expires_on
   metadata                        = each.value.metadata
-  name                            = each.key
+  name                            = each.value.name
   policy_assignment_id            = azurerm_management_group_policy_assignment.this.id
   policy_definition_reference_ids = each.value.policy_definition_reference_ids
   resource_id                     = each.value.resource_id
