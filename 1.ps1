@@ -49,9 +49,9 @@ foreach ($mg in $managementGroups) {
 
             foreach ($managementGroupException in $managementGroups) {
                 Write-Host "Checking for exemptions in Management Group '$($managementGroupException.DisplayName)' - Get-AzPolicyExemption -PolicyAssignmentIdFilter $($policyAssignment.Id) -Scope $($managementGroupException.Id)"
-                $managementGroupPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope $managementGroupException.Id
+                $managementGroupPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope $managementGroupException.Id | Where-Object { $_.Scope.StartsWith($managementGroupException.Id) }
                 foreach ($exemption in $managementGroupPolicyExemptions) {
-                    Write-Host " - Found exemption '$($exemption.Name)'"
+                    Write-Host " - Found exemption '$($exemption.Id)'"
 
                     Add-Content -Path "Imports.txt" -Value "import {"
                     Add-Content -Path "Imports.txt" -Value "  to = module.toreplace.module.management_group_policy_assignment[`"$($policyAssignment.Name)`"].azurerm_management_group_policy_assignment.this[`"$($exemption.Name)`"]"
@@ -75,9 +75,9 @@ foreach ($mg in $managementGroups) {
             Add-Content -Path "1.txt" -Value "      subscription_policy_exemptions = {"
             foreach ($subscriptionException in $subscriptions) {
                 Write-Host "Checking for exemptions in Subscription '$($subscriptionException.Name)' - Get-AzPolicyExemption -PolicyAssignmentIdFilter $($policyAssignment.Id) -Scope '/subscriptions/$($subscriptionException.Id)'"
-                $subscriptionPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope "/subscriptions/$($subscriptionException.Id)"
+                $subscriptionPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope "/subscriptions/$($subscriptionException.Id)" | Where-Object { $_.Scope.StartsWith("/subscriptions/$($subscriptionException.Id)") }
                 foreach ($exemption in $subscriptionPolicyExemptions) {
-                    Write-Host " - Found exemption '$($exemption.Name)'"
+                    Write-Host " - Found exemption '$($exemption.Id)'"
 
                     Add-Content -Path "Imports.txt" -Value "import {"
                     Add-Content -Path "Imports.txt" -Value "  to = module.toreplace.module.management_group_policy_assignment[`"$($policyAssignment.Name)`"].azurerm_subscription_policy_exemption.this[`"$($exemption.Name)`"]"
