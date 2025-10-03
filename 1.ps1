@@ -54,7 +54,7 @@ foreach ($mg in $managementGroups) {
                     Write-Host " - Found exemption '$($exemption.Id)'"
 
                     Add-Content -Path "Imports.txt" -Value "import {"
-                    Add-Content -Path "Imports.txt" -Value "  to = module.toreplace.module.management_group_policy_assignment[`"$($policyAssignment.Name)`"].azurerm_management_group_policy_assignment.this[`"$($exemption.Name)`"]"
+                    Add-Content -Path "Imports.txt" -Value "  to = module.toreplace.module.management_group_policy_assignment[`"$($policyAssignment.Name)`"].azurerm_management_group_policy_assignment.this[`"$($exemption.Id)`"]"
                     Add-Content -Path "Imports.txt" -Value "  id = `"$($exemption.Id)`""
                     Add-Content -Path "Imports.txt" -Value "}"
                     Add-Content -Path "Imports.txt" -Value ""
@@ -64,7 +64,10 @@ foreach ($mg in $managementGroups) {
                     Add-Content -Path "1.txt" -Value "          exemption_category  = `"$($exemption.ExemptionCategory)`""
                     Add-Content -Path "1.txt" -Value "          description = `"$($exemption.Description)`""
                     Add-Content -Path "1.txt" -Value "          display_name = `"$($exemption.DisplayName)`""
-                    Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn)`""
+                    if ($exemption.ExpiresOn)
+                    {
+                        Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn.ToString("yyyy-MM-ddTHH:mm:ssZ"))`""
+                    }
                     Add-Content -Path "1.txt" -Value "          metadata = `"$($exemption.Metadata)`""
                     Add-Content -Path "1.txt" -Value "          name = `"$($exemption.Name)`""
                     Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = [`"$($exemption.PolicyDefinitionReferenceId)`"]"
@@ -80,7 +83,7 @@ foreach ($mg in $managementGroups) {
                     Write-Host " - Found exemption '$($exemption.Id)'"
 
                     Add-Content -Path "Imports.txt" -Value "import {"
-                    Add-Content -Path "Imports.txt" -Value "  to = module.toreplace.module.management_group_policy_assignment[`"$($policyAssignment.Name)`"].azurerm_subscription_policy_exemption.this[`"$($exemption.Name)`"]"
+                    Add-Content -Path "Imports.txt" -Value "  to = module.toreplace.module.management_group_policy_assignment[`"$($policyAssignment.Name)`"].azurerm_subscription_policy_exemption.this[`"$($exemption.Id)`"]"
                     Add-Content -Path "Imports.txt" -Value "  id = `"$($exemption.Id)`""
                     Add-Content -Path "Imports.txt" -Value "}"
                     Add-Content -Path "Imports.txt" -Value ""
@@ -90,7 +93,10 @@ foreach ($mg in $managementGroups) {
                     Add-Content -Path "1.txt" -Value "          exemption_category  = `"$($exemption.ExemptionCategory)`""
                     Add-Content -Path "1.txt" -Value "          description = `"$($exemption.Description)`""
                     Add-Content -Path "1.txt" -Value "          display_name = `"$($exemption.DisplayName)`""
-                    Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn)`""
+                    if ($exemption.ExpiresOn)
+                    {
+                        Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn.ToString("yyyy-MM-ddTHH:mm:ssZ"))`""
+                    }                    
                     Add-Content -Path "1.txt" -Value "          metadata = `"$($exemption.Metadata)`""
                     Add-Content -Path "1.txt" -Value "          name = `"$($exemption.Name)`""
                     Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = [`"$($exemption.PolicyDefinitionReferenceId)`"]"
