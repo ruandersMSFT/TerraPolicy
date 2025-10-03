@@ -49,7 +49,7 @@ foreach ($mg in $managementGroups) {
 
             foreach ($managementGroupException in $managementGroups) {
                 Write-Host "Checking for exemptions in Management Group '$($managementGroupException.DisplayName)' - Get-AzPolicyExemption -PolicyAssignmentIdFilter $($policyAssignment.Id) -Scope $($managementGroupException.Id)"
-                $managementGroupPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope $managementGroupException.Id | Where-Object { $_.Scope -eq $managementGroupException.Id }
+                $managementGroupPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope $managementGroupException.Id
                 foreach ($exemption in $managementGroupPolicyExemptions) {
                     Write-Host " - Found exemption '$($exemption.Name)'"
 
@@ -59,14 +59,15 @@ foreach ($mg in $managementGroups) {
                     Add-Content -Path "Imports.txt" -Value "}"
                     Add-Content -Path "Imports.txt" -Value ""
                     
-                    Add-Content -Path "1.txt" -Value "        `"$($exemption.Name)`" = {"
+                    Add-Content -Path "1.txt" -Value "        `"$($exemption.Id)`" = {"
                     Add-Content -Path "1.txt" -Value "          management_group_id = `"$($managementGroupException.Id)`""
                     Add-Content -Path "1.txt" -Value "          exemption_category  = `"$($exemption.ExemptionCategory)`""
                     Add-Content -Path "1.txt" -Value "          description = `"$($exemption.Description)`""
                     Add-Content -Path "1.txt" -Value "          display_name = `"$($exemption.DisplayName)`""
                     Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn)`""
                     Add-Content -Path "1.txt" -Value "          metadata = `"$($exemption.Metadata)`""
-                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = `"$($exemption.PolicyDefinitionReferenceId)`""
+                    Add-Content -Path "1.txt" -Value "          name = `"$($exemption.Name)`""
+                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = [`"$($exemption.PolicyDefinitionReferenceId)`"]"
                     Add-Content -Path "1.txt" -Value "        }"
                 }
             }
@@ -74,7 +75,7 @@ foreach ($mg in $managementGroups) {
             Add-Content -Path "1.txt" -Value "      subscription_policy_exemptions = {"
             foreach ($subscriptionException in $subscriptions) {
                 Write-Host "Checking for exemptions in Subscription '$($subscriptionException.Name)' - Get-AzPolicyExemption -PolicyAssignmentIdFilter $($policyAssignment.Id) -Scope '/subscriptions/$($subscriptionException.Id)'"
-                $subscriptionPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope "/subscriptions/$($subscriptionException.Id)" | Where-Object { $_.Scope -eq "/subscriptions/$($subscriptionException.Id)" }
+                $subscriptionPolicyExemptions = Get-AzPolicyExemption -PolicyAssignmentIdFilter $policyAssignment.Id -Scope "/subscriptions/$($subscriptionException.Id)"
                 foreach ($exemption in $subscriptionPolicyExemptions) {
                     Write-Host " - Found exemption '$($exemption.Name)'"
 
@@ -84,14 +85,15 @@ foreach ($mg in $managementGroups) {
                     Add-Content -Path "Imports.txt" -Value "}"
                     Add-Content -Path "Imports.txt" -Value ""
                     
-                    Add-Content -Path "1.txt" -Value "        `"$($exemption.Name)`" = {"
+                    Add-Content -Path "1.txt" -Value "        `"$($exemption.Id)`" = {"
                     Add-Content -Path "1.txt" -Value "          subscription_id = `"/subscriptions/$($subscriptionException.Id)`""
                     Add-Content -Path "1.txt" -Value "          exemption_category  = `"$($exemption.ExemptionCategory)`""
                     Add-Content -Path "1.txt" -Value "          description = `"$($exemption.Description)`""
                     Add-Content -Path "1.txt" -Value "          display_name = `"$($exemption.DisplayName)`""
                     Add-Content -Path "1.txt" -Value "          expires_on = `"$($exemption.ExpiresOn)`""
                     Add-Content -Path "1.txt" -Value "          metadata = `"$($exemption.Metadata)`""
-                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = `"$($exemption.PolicyDefinitionReferenceId)`""
+                    Add-Content -Path "1.txt" -Value "          name = `"$($exemption.Name)`""
+                    Add-Content -Path "1.txt" -Value "          policy_definition_reference_ids = [`"$($exemption.PolicyDefinitionReferenceId)`"]"
                     Add-Content -Path "1.txt" -Value "        }"
                 }
             }
